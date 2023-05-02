@@ -33,4 +33,6 @@
     object-fit: contain;
     margin-top: 10px;
   }
-  
+  #frame{
+    border: pink;
+  }

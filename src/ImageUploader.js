@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useRef} from 'react';
+
 import './ImageUploader.css';
 
 function ImageUploader(props) {
@@ -6,7 +7,7 @@ function ImageUploader(props) {
   const [file, setFile] = useState(null);
   const [error, setError] = useState(false);
   const [message, setMessage] = useState('');
-
+  const floorRef = useRef(0)
 
   const { setAllDetails, AllDetails, item } = props
 
@@ -33,6 +34,10 @@ function ImageUploader(props) {
     }
 
     const imageFile = event.dataTransfer.files[0];
+    if (AllDetails&&AllDetails.length > 0) {
+      setAllDetails(AllDetails.filter(p => p.item != item))
+    }
+    setAllDetails(alldetails => [...alldetails, { item: item, img: imageFile.current }])
     if (!imageFile.type.startsWith('image/')) {
       setError(true);
       setMessage('An invalid file was uploaded, please upload an image!');
@@ -56,7 +61,7 @@ function ImageUploader(props) {
     if (AllDetails&&AllDetails.length > 0) {
       setAllDetails(AllDetails.filter(p => p.item != item))
     }
-    setAllDetails(alldetails => [...alldetails, { item: item, img: imageFile }])
+    setAllDetails(alldetails => [...alldetails, { item: item, img: imageFile,floor:floorRef }])
 
 
     if (!imageFile.type.startsWith('image/')) {
@@ -75,6 +80,8 @@ function ImageUploader(props) {
   };
 
   return (
+    < >
+    <div id="frame">
     <div
       className={`image-drop-area ${dragOver ? 'drag-over' : ''} ${error ? 'error' : ''}`}
       onDragOver={handleDragOver}
@@ -93,7 +100,10 @@ function ImageUploader(props) {
         onChange={handleFileSelect}
         style={{ display: 'none' }}
       />
+    </div><br></br>
+    <input ref={floorRef} type='number'/>
     </div>
+    </>
   );
 }
 

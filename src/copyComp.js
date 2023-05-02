@@ -35,7 +35,14 @@ const ssss=()=>{
                 <button onClick={copy}>copy elements</button>
             </div>
             {componentArray1.map((item)=>(
-                <MyComponent AllDetails={AllDetails} setAllDetails={setAllDetails} item={item} />
+                
+               // <MyComponent AllDetails={AllDetails} setAllDetails={setAllDetails} item={item} />
+               <div>
+               <MyComponent AllDetails={AllDetails} setAllDetails={setAllDetails} item={item} />
+               <br />
+               <br></br>
+               <br></br>
+             </div>
              
             ))}
 
