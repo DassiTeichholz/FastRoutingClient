@@ -8,7 +8,11 @@ const MyComponent = () => {
   const handleSendData = async () => {
     setLoading(true);
     try {
-      await axios.post('/api/nisuy_', 'jjj');
+      await axios.post('https://localhost:7227/api/nisuy_', {
+         flag: 'jjj',
+         num:45,
+         
+         });
       // הצלחנו לשלוח את המידע לשרת
     } catch (error) {
       // קרתה שגיאה בשליחת המידע לשרת
