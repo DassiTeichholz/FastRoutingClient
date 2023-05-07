@@ -1,19 +1,30 @@
 import { useState } from 'react';
 import './BaseComp.css'; // Import your CSS file here
 import img from './assets/logo.png'
+import { Navigate, Outlet } from 'react-router';
+import { Link,useNavigate } from 'react-router-dom';
 
 function BaseComp() {
   const [activeButton, setActiveButton] = useState('home'); // State to keep track of active button
-
+   let Navigate=useNavigate()
   // Function to handle button clicks and update activeButton state
   const handleButtonClick = (buttonName) => {
     setActiveButton(buttonName);
+    if(buttonName=='home'){
+      Navigate('/Manager')
+    }
+    if(buttonName=='about'){
+      Navigate('/About')
+    }
   }
 
   return (
+    <>
+    
     <nav className="navigation-bar">
       <ul>
         <li className={activeButton === 'home' ? 'active' : ''}>
+          {/* <Link  to="Manager">manager</Link> */}
           <button onClick={() => handleButtonClick('home')}>Home</button>
         </li>
         <li className={activeButton === 'about' ? 'active' : ''}>
@@ -24,8 +35,10 @@ function BaseComp() {
         </li>
       </ul>
       <div className="original-and-beautiful"><img id='img'src={img} alt="logo" />
-</div>
+      </div>
     </nav>
+    <Outlet/>
+    </>
   );
 }
 

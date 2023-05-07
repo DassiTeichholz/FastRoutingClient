@@ -1,0 +1,40 @@
+.image-drop-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 300px;
+    height: 300px;
+    border: 2px dashed gray;
+    border-radius: 10px;
+    background-color: lightgray;
+    position: relative;
+  }
+  
+  .image-drop-area.drag-over {
+    border-style: solid;
+  }
+  
+  .image-drop-message {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+  }
+  
+  .hidden-input {
+    display: none;
+  }
+  
+  .preview-image {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    margin-top: 10px;
+  }
+  
+  .image-drop-area.error {
+    border-color: red;
+  }
+  

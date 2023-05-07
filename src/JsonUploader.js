@@ -1,26 +1,23 @@
-import React, { useState, useRef,useEffect } from 'react';
+import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
-
+import { useNavigate } from "react-router-dom";
 
 import './ImageUploader.css';
 
-function ImageUploader(props) {
+function JsonUploader() {
+  const location = useLocation();
+  let Navigate=useNavigate()
+  
+  const centerName = location.state?.centerName;
+  debugger
   const [dragOver, setDragOver] = useState(false);
   const [file, setFile] = useState(null);
   const [error, setError] = useState(false);
   const [message, setMessage] = useState('');
-  const floorRef = useRef(-70)
-  let imageFile='';
+  const [jsonFile, setJsonFile] = useState(null)
+ // const floorRef = useRef(0)
 
-  const { setAllDetails, AllDetails, item } = props
-
-
-  useEffect(() => {
-    if (floorRef.current.valueAsNumber !== -70 && file !== null) {
-      setAllDetails(alldetails => [...alldetails, { item: item, img: imageFile.current ,floor:floorRef.current.value}])
-      debugger
-    }
-  }, [floorRef, file]);
+  //const { setAllDetails, AllDetails, item } = props
 
   const handleDragOver = (event) => {
     event.preventDefault();
@@ -43,63 +40,70 @@ function ImageUploader(props) {
       setMessage('An invalid file was uploaded, please upload an image!');
       return;
     }
+    
 
-    imageFile = event.dataTransfer.files[0];
-    if (AllDetails&&AllDetails.length > 0) {
-      setAllDetails(AllDetails.filter(p => p.item != item))
-    }
-    // setAllDetails(alldetails => [...alldetails, { item: item, img: imageFile.current ,floor:floorRef.current.value}])
-    if (!imageFile.type.startsWith('image/')) {
+    const jsonFile1 = event.dataTransfer.files[0];
+    if (jsonFile1.type !== 'application/json') {
       setError(true);
-      setMessage('An invalid file was uploaded, please upload an image!');
+      setMessage('An invalid file was uploaded, please upload a JSON file!');
       return;
     }
+    setJsonFile(jsonFile1);
 
     const reader = new FileReader();
-    reader.readAsDataURL(imageFile);
+    reader.readAsDataURL(jsonFile1);
     reader.onload = (event) => {
       setFile(event.target.result);
       setError(false);
-      setMessage('The image was dragged successfully');
+      setMessage('The json file was dragged successfully');
     };
 
     setDragOver(false);
   };
 
   const handleFileSelect = (event) => {
+   
 
-    imageFile = event.target.files[0];
-    if (AllDetails&&AllDetails.length > 0) {
-      setAllDetails(AllDetails.filter(p => p.item != item))
-    }
-    
-    // setAllDetails(alldetails => [...alldetails, { item: item, img: imageFile,floor:floorRef.current.value   }])
-   console.log(floorRef.current.value )
-    
-    if (!imageFile.type.startsWith('image/')) {
+    const jsonFile1 = event.target.files[0];
+    if (jsonFile1.type !== 'application/json') {
       setError(true);
-      setMessage('An invalid file was uploaded, please upload an image!');
+      setMessage('An invalid file was uploaded, please upload a JSON file!');
       return;
     }
+    setJsonFile(jsonFile1);
 
     const reader = new FileReader();
-    reader.readAsDataURL(imageFile);
+    reader.readAsDataURL(jsonFile1);
     reader.onload = (event) => {
       setFile(event.target.result);
       setError(false);
-      setMessage('The image was uploaded successfully');
+      setMessage('The json was uploaded successfully');
     };
   };
+  
+  const ssss=()=>{
+    debugger
+   if(jsonFile==null){
+    document.getElementById("div").style.display="block";
+    return;
+   }
+   document.getElementById("div").style.display="none"
+
+    console.log(jsonFile);
+    Navigate("/MyComponentContainer", { state: { centerName: centerName ,jsonFile:jsonFile} });
+    
+  }
 
   return (
     < >
+    <h1>גרור קובץ ג'ייסון המכיל את פרטי המרכז החדש</h1>
     <div id="frame">
     <div
       className={`image-drop-area ${dragOver ? 'drag-over' : ''} ${error ? 'error' : ''}`}
       onDragOver={handleDragOver}
       onDragLeave={handleDragLeave}
       onDrop={handleDrop}
-      onClick={() => document.getElementById('file-input' + item).click()}
+      onClick={() => document.getElementById('file-input' ).click()}
     >
       <div className="image-drop-message">
         <p>{message || 'Drag an image here or click to select'}</p>
@@ -107,16 +111,20 @@ function ImageUploader(props) {
       {file && <img className="preview-image" src={file} alt="Preview" />}
       <input
         type="file"
-        id={'file-input' + item}
-        accept="image/*"
+        id={'file-input'}
+        accept=".json"
         onChange={handleFileSelect}
         style={{ display: 'none' }}
       />
     </div><br></br>
-    <input ref={floorRef} type='number'/>
+   
     </div>
+    <button onClick={ssss}>הבא</button>
+    
+    <div id="div" style={{ display: 'none' }} >לא הוכנס דף ג'ייסון</div>
     </>
   );
 }
 
-export default ImageUploader;
+
+export default JsonUploader;

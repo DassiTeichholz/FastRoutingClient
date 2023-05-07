@@ -1,21 +1,35 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
 import './index.css';
-//import MyComponent from './MyComponent';
-import BaseComp from './BaseComp'
+import Manager from './Manager';
+import BaseComp from './BaseComp';
+import JsonUploader from './JsonUploader';
+import About from './About';
+import ImageUploader from './ImageUploader';
 import reportWebVitals from './reportWebVitals';
-import 'bootstrap/dist/css/bootstrap.css';
+import ReactDOM from 'react-dom';
+import MyComponentContainer from './copyComp';
 
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
-    {/* <MyComponent /> */}
-    <BaseComp />
-  </React.StrictMode>
-);
+const App = () => {
+  return (
+    <React.StrictMode>
+      <BrowserRouter>
+        <Routes>
+          
+          <Route path='/' element={<BaseComp/>} >
+          <Route path='/Manager' element={<Manager />} />
+          <Route  path='/About' element={<About/>}></Route>
+          <Route path='/JsonUploader' element={<JsonUploader/>}></Route>
+          <Route path='/ImageUploader' element={<ImageUploader/>}></Route>
+          <Route path='/MyComponentContainer' element={<MyComponentContainer/>}></Route>
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </React.StrictMode>
+  );
+}
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+ReactDOM.render(<App />, document.getElementById('root'));
+
 reportWebVitals();
