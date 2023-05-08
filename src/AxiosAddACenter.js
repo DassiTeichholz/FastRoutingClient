@@ -1,16 +1,24 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useLocation } from 'react-router-dom';
 
 
-const MyComponent = () => {
+const AxiosAddACenter = () => {
+  const location = useLocation();
+  const centerName = location.state.centerName;
+  const jsonFile = location.state.jsonFile;
+  const imagesArr=location.state.imagesArr;
   const [loading, setLoading] = useState(false);
 
   const handleSendData = async () => {
     setLoading(true);
     try {
+      debugger
       await axios.post('https://localhost:7227/api/nisuy_', {
-         flag: 'jjj',
-         num:45,
+        centerName: centerName
+        //,
+        // jsonFile:JSON.stringify(jsonFile),
+        // imagesArr:JSON.stringify(imagesArr)
          
          });
       // הצלחנו לשלוח את המידע לשרת
@@ -29,4 +37,4 @@ const MyComponent = () => {
   );
 };
 
-export default MyComponent;
+export default AxiosAddACenter;

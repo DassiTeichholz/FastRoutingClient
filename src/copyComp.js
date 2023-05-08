@@ -1,13 +1,14 @@
 import React, { useRef, useState } from 'react';
 import MyComponent from './ImageUploader';
 import { useLocation } from 'react-router-dom';
-
+import { useNavigate } from "react-router-dom";
 function MyComponentContainer(props) {
     const location = useLocation();
-    
+    let Navigate=useNavigate()
 
-    // const centerName = location.state.centerName;
-    // const jsonFile = location.state.jsonFile;
+
+  const centerName = location.state.centerName;
+  const jsonFile = location.state.jsonFile;
 
 
     const countRef = useRef(0)
@@ -19,18 +20,23 @@ function MyComponentContainer(props) {
         //setcomponentArray([...componentArray,<MyComponent setAllDetails={setAllDetails}  />]);
 
     }
-const ssss=()=>{
+    const ssss=()=>{
     if(AllDetails.length==0){
-     document.getElementById('err').style.display='block'
-     return
+     document.getElementById('err').style.display='block';
+     return;
     }
     else{
-        document.getElementById('err').style.display='none'
+        document.getElementById('err').style.display='none';
+        if(AllDetails.length!==countRef.current.valueAsNumber)
+        {
+            document.getElementById('err2').style.display='block';
+            return;
+        }
+        document.getElementById('err2').style.display='none'  ;
+        Navigate("/AxiosAddACenter", { state: { centerName: centerName ,jsonFile:jsonFile,imagesArr:AllDetails} });
 
     }
-    console.log(componentArray1);
-    console.log(AllDetails);
-    debugger
+   
 
 }
     const copy = () => {
@@ -66,7 +72,7 @@ const ssss=()=>{
 
             <button onClick={ssss}>ssss</button>
             <div id='err' style={{ display: 'none' }}>לא העלת אף תמונה</div>
-
+            <div id='err2' style={{ display: 'none' }}>לא הוזנו כל שדות הקלט</div>
 
         </div>
     );

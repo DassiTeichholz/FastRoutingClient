@@ -5,19 +5,29 @@ import { useLocation } from 'react-router-dom';
 import './ImageUploader.css';
 
 function ImageUploader(props) {
+  debugger
   const [dragOver, setDragOver] = useState(false);
   const [file, setFile] = useState(null);
   const [error, setError] = useState(false);
   const [message, setMessage] = useState('');
-  const floorRef = useRef(-70)
+  const [floorRef, setfloorRef] = useState(null);
+
+ // const floorRef = useRef(-70)
   let imageFile='';
 
   const { setAllDetails, AllDetails, item } = props
 
-
+   function inpupChange(evn)
+  {
+    setfloorRef(evn.target.value);
+  }
   useEffect(() => {
-    if (floorRef.current.valueAsNumber !== -70 && file !== null) {
-      setAllDetails(alldetails => [...alldetails, { item: item, img: imageFile.current ,floor:floorRef.current.value}])
+    if (AllDetails&&AllDetails.length > 0) {
+      setAllDetails(AllDetails.filter(p => p.item != item))
+    }
+    
+    if (floorRef &&floorRef !== "" && file !== null) {
+      setAllDetails(alldetails => [...alldetails, { item: item, img: file ,floor:floorRef}])
       debugger
     }
   }, [floorRef, file]);
@@ -45,15 +55,16 @@ function ImageUploader(props) {
     }
 
     imageFile = event.dataTransfer.files[0];
-    if (AllDetails&&AllDetails.length > 0) {
-      setAllDetails(AllDetails.filter(p => p.item != item))
-    }
-    // setAllDetails(alldetails => [...alldetails, { item: item, img: imageFile.current ,floor:floorRef.current.value}])
     if (!imageFile.type.startsWith('image/')) {
       setError(true);
       setMessage('An invalid file was uploaded, please upload an image!');
       return;
     }
+    // if (AllDetails&&AllDetails.length > 0) {
+    //   setAllDetails(AllDetails.filter(p => p.item != item))
+    // }
+    // setAllDetails(alldetails => [...alldetails, { item: item, img: imageFile.current ,floor:floorRef.current.value}])
+    
 
     const reader = new FileReader();
     reader.readAsDataURL(imageFile);
@@ -69,18 +80,18 @@ function ImageUploader(props) {
   const handleFileSelect = (event) => {
 
     imageFile = event.target.files[0];
-    if (AllDetails&&AllDetails.length > 0) {
-      setAllDetails(AllDetails.filter(p => p.item != item))
-    }
-    
-    // setAllDetails(alldetails => [...alldetails, { item: item, img: imageFile,floor:floorRef.current.value   }])
-   console.log(floorRef.current.value )
-    
     if (!imageFile.type.startsWith('image/')) {
       setError(true);
       setMessage('An invalid file was uploaded, please upload an image!');
       return;
     }
+    // if (AllDetails&&AllDetails.length > 0) {
+    //   setAllDetails(AllDetails.filter(p => p.item != item))
+    // }
+    
+    // setAllDetails(alldetails => [...alldetails, { item: item, img: imageFile,floor:floorRef.current.value   }])
+    
+   
 
     const reader = new FileReader();
     reader.readAsDataURL(imageFile);
@@ -113,7 +124,7 @@ function ImageUploader(props) {
         style={{ display: 'none' }}
       />
     </div><br></br>
-    <input ref={floorRef} type='number'/>
+    <input onChange={inpupChange} type='number'/>
     </div>
     </>
   );

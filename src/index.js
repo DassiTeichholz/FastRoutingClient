@@ -8,6 +8,7 @@ import ImageUploader from './ImageUploader';
 import reportWebVitals from './reportWebVitals';
 import ReactDOM from 'react-dom';
 import MyComponentContainer from './copyComp';
+import AxiosAddACenter from './AxiosAddACenter'
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
@@ -23,6 +24,7 @@ const App = () => {
           <Route path='/JsonUploader' element={<JsonUploader/>}></Route>
           <Route path='/ImageUploader' element={<ImageUploader/>}></Route>
           <Route path='/MyComponentContainer' element={<MyComponentContainer/>}></Route>
+          <Route path='/AxiosAddACenter' element={<AxiosAddACenter/>}></Route>
           </Route>
         </Routes>
       </BrowserRouter>
