@@ -13,14 +13,19 @@ const AxiosAddACenter = () => {
   const handleSendData = async () => {
     setLoading(true);
     try {
-      debugger
-      await axios.post('https://localhost:7227/api/nisuy_', {
-        centerName: centerName
-        //,
-        // jsonFile:JSON.stringify(jsonFile),
-        // imagesArr:JSON.stringify(imagesArr)
-         
-         });
+      const formData = new FormData();
+      formData.append('centerName', centerName);
+      formData.append('jsonFile', JSON.stringify(jsonFile));
+      imagesArr.forEach((image, index) => {
+        formData.append(`imagesArr[${index}].item`, image.item);
+        formData.append(`imagesArr[${index}].floor`, image.floor);
+        formData.append(`imagesArr[${index}].img`, image.img);
+      });
+      await axios.post('https://localhost:7227/api/nisuy_', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      });
       // הצלחנו לשלוח את המידע לשרת
     } catch (error) {
       // קרתה שגיאה בשליחת המידע לשרת
