@@ -23,15 +23,19 @@ function BaseComp() {
     
     <nav className="navigation-bar">
       <ul>
+        <li className={activeButton === 'about' ? 'active' : ''}>
+          <button onClick={() => handleButtonClick('about')}>אודות</button>
+        </li>
         <li className={activeButton === 'home' ? 'active' : ''}>
           {/* <Link  to="Manager">manager</Link> */}
-          <button onClick={() => handleButtonClick('home')}>Home</button>
+          <button onClick={() => handleButtonClick('home')}>ניווט</button>
         </li>
-        <li className={activeButton === 'about' ? 'active' : ''}>
-          <button onClick={() => handleButtonClick('about')}>About</button>
-        </li>
+       
         <li className={activeButton === 'contact' ? 'active' : ''}>
-          <button onClick={() => handleButtonClick('contact')}>Contact</button>
+          <button onClick={() => handleButtonClick('contact')}>יצירת קשר</button>
+        </li>
+        <li className={activeButton === 'manager' ? 'active' : ''}>
+          <button onClick={() => handleButtonClick('manager')}>הוספת מרכז</button>
         </li>
       </ul>
       <div className="original-and-beautiful"><img id='img'src={img} alt="logo" />

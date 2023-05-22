@@ -1,53 +1,95 @@
-import React, { useState,useEffect } from 'react';
+import React, { useEffect } from 'react';
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
-
 
 const AxiosAddACenter = () => {
   const location = useLocation();
   const InputString = location.state.centerName;
   const JsonObject = location.state.jsonFile;
-  const imagesArr=location.state.imagesArr;
- 
+  const imagesArr = location.state.imagesArr;
+
   useEffect(() => {
     sendTheMallPhotos();
   }, []);
 
-  
-    
-      const sendTheMallPhotos =async () => {
-        try{
-          debugger
+  const sendTheMallPhotos = async () => {
+    try {
+      const requestData = {
+        Images: imagesArr.map(image => ({
+          image: image.img,
+          floor: image.floor
+        })),
+        InputString: InputString,
+        JsonObject: JsonObject
+      };
 
-
-
-          const requestData = {
-            images: imagesArr,
-            inputString: InputString,
-            jsonObject: JsonObject
-          };
-         
-        
-      let anss=await axios.post('https://localhost:7227/api/nisuy_', requestData);
+      await axios.post('https://localhost:7227/api/nisuy_', requestData);
       console.log('TheMallPhotos sent successfully!');
-    }
-  
-    
-    catch (error) {
-    
+    } catch (error) {
       console.error('Error sending TheMallPhotos:', error);
     }
-  }
-  return (
-    <div>
-      
-      {/* Rendering component */}
-    </div>
-  );
- 
+  };
+
+  return <div>{/* Rendering component */}</div>;
 };
 
 export default AxiosAddACenter;
+
+
+
+
+
+
+// import React, { useState,useEffect } from 'react';
+// import axios from 'axios';
+// import { useLocation } from 'react-router-dom';
+
+
+// const AxiosAddACenter = () => {
+//   const location = useLocation();
+//   const InputString = location.state.centerName;
+//   const JsonObject = location.state.jsonFile;
+//   const imagesArr=location.state.imagesArr;
+ 
+//   useEffect(() => {
+//     sendTheMallPhotos();
+//   }, []);
+
+  
+    
+//       const sendTheMallPhotos =async () => {
+//         try{
+//           debugger
+
+
+
+//           const requestData = {
+//             images: imagesArr,
+//             inputString: InputString,
+//             jsonObject: JsonObject
+//           };
+         
+        
+//       let anss=await axios.post('https://localhost:7227/api/nisuy_', requestData);
+//       console.log('TheMallPhotos sent successfully!');
+//     }
+  
+    
+//     catch (error) {
+    
+//       console.error('Error sending TheMallPhotos:', error);
+//     }
+//   }
+//   return (
+//     <div>
+      
+//       {/* Rendering component */}
+//     </div>
+//   );
+ 
+// };
+
+// export default AxiosAddACenter;
 
 
 // // const [loading, setLoading] = useState(false);

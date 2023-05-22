@@ -33,7 +33,7 @@ function MyComponentContainer(props) {
             return;
         }
         document.getElementById('err2').style.display='none'  ;
-        Navigate("/AxiosAddACenter", { state: { centerName: centerName ,jsonFile:jsonFile,imagesArr:AllDetails} });
+        Navigate("/AxiosAddACenter2", { state: { centerName: centerName ,jsonFile:jsonFile,imagesArr:AllDetails} });
 
     }
    

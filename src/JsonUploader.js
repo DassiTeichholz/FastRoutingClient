@@ -106,7 +106,7 @@ function JsonUploader() {
       onClick={() => document.getElementById('file-input' ).click()}
     >
       <div className="image-drop-message">
-        <p>{message || 'Drag an image here or click to select'}</p>
+        <p>{message || 'Drag an json here or click to select'}</p>
       </div>
       {file && <img className="preview-image" src={file} alt="Preview" />}
       <input
