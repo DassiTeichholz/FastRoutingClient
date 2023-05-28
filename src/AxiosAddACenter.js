@@ -104,7 +104,7 @@ const AxiosAddACenter = () => {
       //   jsonObject: JsonObject
       // };
    debugger
-      await axios.post('https://localhost:7227/api/nisuy_', {Images:transformedArray,JsonObject:jsonString
+      await axios.post('https://localhost:7227/api/nisuy_', {Images:transformedArray,JsonObject:jsonFile
        ,InputString:InputString
     });
       console.log('TheMallPhotos sent successfully!');
